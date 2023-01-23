@@ -260,16 +260,21 @@ class Request extends Component
     private function isForced($user = NULL)
     {
         $request = Craft::$app->getRequest();
-        $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
 
         if ($request->getIsCpRequest()) {
+
+            $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
+            Craft::info("Backend request: " var_export($forceBackEnd, true), __METHOD__);
+
             if (is_array($forceBackEnd)) {
+                Craft::info("forceBackEnd is an Array, check if any of the values match one of the user group IDs", __METHOD__);
                 $groupIds = [];
                 foreach ($user->getGroups() as $group) {
-                    $groupIds[] = $group->getId(); 
+                    $groupIds[] = $group->id; 
                 }
                 $intersection = array_intersect($forceBackEnd, $groupIds);
                 if (!empty($intersection)) {
+                    Craft::info(var_export($intersection, true) . " is not empty, force user to use 2FA.", __METHOD__);
                     return true;
                 }
                 return false;
