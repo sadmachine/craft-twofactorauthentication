@@ -17,6 +17,11 @@ class Settings extends Model
     public $verifyBackEnd = true;
 
     public $forceFrontEnd = false;
+
+    
+    /**
+     * @var mixed True/False, or array of UserGroup handles that should be forced
+     */
     public $forceBackEnd = false;
 
     /**

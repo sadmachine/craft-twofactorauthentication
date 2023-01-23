@@ -268,11 +268,11 @@ class Request extends Component
 
             if (is_array($forceBackEnd)) {
                 Craft::info("forceBackEnd is an Array, check if any of the values match one of the user group IDs", __METHOD__);
-                $groupIds = [];
+                $groupHandles = [];
                 foreach ($user->getGroups() as $group) {
-                    $groupIds[] = $group->id; 
+                    $groupHandles[] = $group->id; 
                 }
-                $intersection = array_intersect($forceBackEnd, $groupIds);
+                $intersection = array_intersect($forceBackEnd, $groupHandles);
                 if (!empty($intersection)) {
                     Craft::info(var_export($intersection, true) . " is not empty, force user to use 2FA.", __METHOD__);
                     return true;
