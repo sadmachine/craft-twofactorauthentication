@@ -270,7 +270,7 @@ class Request extends Component
                 Craft::info("forceBackEnd is an Array, check if any of the values match one of the user group IDs", __METHOD__);
                 $groupHandles = [];
                 foreach ($user->getGroups() as $group) {
-                    $groupHandles[] = $group->id; 
+                    $groupHandles[] = $group->handle; 
                 }
                 $intersection = array_intersect($forceBackEnd, $groupHandles);
                 if (!empty($intersection)) {
