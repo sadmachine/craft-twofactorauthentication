@@ -260,6 +260,7 @@ class Request extends Component
     private function isForced($user = NULL)
     {
         $request = Craft::$app->getRequest();
+        Craft::info("before is statement", __METHOD__)
 
         if ($request->getIsCpRequest()) {
             $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
