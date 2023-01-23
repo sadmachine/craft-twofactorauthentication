@@ -1,5 +1,5 @@
 {
-    "name": "sadmachine/craft-twofactorauthentication",
+    "name": "born05/craft-twofactorauthentication",
     "description": "Craft 3 plugin for two-factor or two-step login using Time Based OTP.",
     "type": "craft-plugin",
     "keywords": [
@@ -12,7 +12,7 @@
         "craftcms"
     ],
     "license": "MIT",
-    "homepage": "https://github.com/sadmachine/craft-twofactorauthentication",
+    "homepage": "https://github.com/born05/craft-twofactorauthentication",
     "authors": [
         {
             "name": "Roel van Hintum",
@@ -31,19 +31,19 @@
         }
     },
     "support": {
-        "email": "austinfishbaugh@imarc.com",
-        "issues": "https://github.com/sadmachine/craft-twofactorauthentication/issues",
-        "source": "https://github.com/sadmachine/craft-twofactorauthentication",
-        "docs": "https://github.com/sadmachine/craft-twofactorauthentication/blob/craft-3.1/README.md",
-        "rss": "https://github.com/sadmachine/craft-twofactorauthentication/releases.atom"
+        "email": "development@born05.com",
+        "issues": "https://github.com/born05/craft-twofactorauthentication/issues",
+        "source": "https://github.com/born05/craft-twofactorauthentication",
+        "docs": "https://github.com/born05/craft-twofactorauthentication/blob/craft-3.1/README.md",
+        "rss": "https://github.com/born05/craft-twofactorauthentication/releases.atom"
     },
     "extra": {
         "name": "Two-Factor Authentication",
         "handle": "two-factor-authentication",
         "developer": "Born05",
         "developerUrl": "https://born05.com",
-        "documentationUrl": "https://github.com/sadmachine/craft-twofactorauthentication",
-        "changelogUrl": "https://raw.githubusercontent.com/sadmachine/craft-twofactorauthentication/craft-3.1/CHANGELOG.md"
+        "documentationUrl": "https://github.com/born05/craft-twofactorauthentication",
+        "changelogUrl": "https://raw.githubusercontent.com/born05/craft-twofactorauthentication/craft-3.1/CHANGELOG.md"
     },
     "config": {
         "allow-plugins": {
