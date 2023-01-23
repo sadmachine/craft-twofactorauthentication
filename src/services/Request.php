@@ -264,9 +264,12 @@ class Request extends Component
         Craft::info(var_export($forceBackEnd, true), __METHOD__);
 
         if ($request->getIsCpRequest()) {
-            Craft::info(var_export($forceBackEnd, true));
             if (is_array($forceBackEnd)) {
-                if (!empty(array_intersect($forceBackEnd, $user->getGroups()))) {
+                $intersection = array_intersect($forceBackEnd, $user->getGroups());
+                Craft::info(var_export($intersection), __METHOD__);
+                Craft::info(empty(var_export($intersection)), __METHOD__);
+                Craft::info(!empty(var_export($intersection)), __METHOD__);
+                if (!empty($intersection)) {
                     return true;
                 }
                 return false;
