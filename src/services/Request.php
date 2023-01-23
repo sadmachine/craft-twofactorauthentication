@@ -261,14 +261,14 @@ class Request extends Component
     {
         $request = Craft::$app->getRequest();
         $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
-        Craft::info(var_export($forceBackEnd, true), __METHOD__);
 
         if ($request->getIsCpRequest()) {
             if (is_array($forceBackEnd)) {
-                $intersection = array_intersect($forceBackEnd, $user->getGroups());
-                Craft::info(var_export($intersection), __METHOD__);
-                Craft::info(empty(var_export($intersection)), __METHOD__);
-                Craft::info(!empty(var_export($intersection)), __METHOD__);
+                $groupIds = [];
+                foreach ($user->getGroups() as $group) {
+                    $groupIds[] = $group->getId(); 
+                }
+                $intersection = array_intersect($forceBackEnd, $groupIds);
                 if (!empty($intersection)) {
                     return true;
                 }
