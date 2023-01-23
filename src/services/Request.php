@@ -27,7 +27,7 @@ class Request extends Component
             if (isset($user) &&
                 (
                     $verify->isEnabled($user) ||
-                    ($this->isForced() && !$this->is2FASettingsRequest())
+                    ($this->isForced($user) && !$this->is2FASettingsRequest())
                 ) &&
                 !$verify->isVerified($user)
             ) {
@@ -87,7 +87,7 @@ class Request extends Component
             }
         } elseif (isset($user) &&
             !$verify->isEnabled($user) &&
-            $this->isForced()
+            $this->isForced($user)
         ) {
             $url = $this->getSettingsUrl();
 
@@ -257,11 +257,18 @@ class Request extends Component
      * Determine if 2FA is forced.
      * @return boolean
      */
-    private function isForced()
+    private function isForced($user = NULL)
     {
         $request = Craft::$app->getRequest();
 
         if ($request->getIsCpRequest()) {
+            $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
+            if (is_array($forceBackEnd)) {
+                if (!empty(array_intersect($forceBackEnd, $user->getGroups()))) {
+                    return true;
+                }
+                return false;
+            }
             return TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
         }
 

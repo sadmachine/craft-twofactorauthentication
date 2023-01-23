@@ -48,7 +48,7 @@ class Settings extends Model
     public function rules()
     {
         return [
-            [['verifyFrontEnd', 'verifyBackEnd', 'forceFrontEnd', 'forceBackEnd'], 'boolean'],
+            [['verifyFrontEnd', 'verifyBackEnd', 'forceFrontEnd'], 'boolean'],
         ];
     }
 }
