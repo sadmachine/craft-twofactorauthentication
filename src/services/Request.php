@@ -264,7 +264,7 @@ class Request extends Component
         if ($request->getIsCpRequest()) {
 
             $forceBackEnd = TwoFactorAuth::$plugin->getSettings()->forceBackEnd;
-            Craft::info("Backend request: " var_export($forceBackEnd, true), __METHOD__);
+            Craft::info("Backend request: " . var_export($forceBackEnd, true), __METHOD__);
 
             if (is_array($forceBackEnd)) {
                 Craft::info("forceBackEnd is an Array, check if any of the values match one of the user group IDs", __METHOD__);
