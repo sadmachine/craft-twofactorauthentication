@@ -50,7 +50,10 @@ class Settings extends Model
      */
     public $frontEndPathExclude = [];
 
-    public function rules()
+    /**
+     * @inheritdoc
+     */
+    public function defineRules(): array
     {
         return [
             [['verifyFrontEnd', 'verifyBackEnd', 'forceFrontEnd'], 'boolean'],

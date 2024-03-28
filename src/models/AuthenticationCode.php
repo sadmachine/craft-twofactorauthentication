@@ -30,9 +30,9 @@ class AuthenticationCode extends Model
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function rules()
+    public function defineRules(): array
     {
         return [
             [['authenticationCode'], 'required'],

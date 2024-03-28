@@ -25,15 +25,8 @@ use yii\web\UserEvent;
 
 class Plugin extends CraftPlugin
 {
-    /**
-     * @var string
-     */
-    public $schemaVersion = '2.7.2';
-
-    /**
-     * @var bool
-     */
-    public $hasCpSection = true;
+    public string $schemaVersion = '2.7.2';
+    public bool $hasCpSection = true;
 
     /**
      * Static property that is an instance of this plugin class so that it can be accessed via
@@ -41,15 +34,17 @@ class Plugin extends CraftPlugin
      *
      * @var Plugin
      */
-    public static $plugin;
+    public static Plugin $plugin;
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
         self::$plugin = $this;
 
         $request = Craft::$app->getRequest();
-        $response = Craft::$app->getResponse();
 
         if (!$this->isInstalled || $request->getIsConsoleRequest()) {
             return;
@@ -130,7 +125,10 @@ class Plugin extends CraftPlugin
         });
     }
 
-    protected function createSettingsModel()
+    /**
+     * @inheritdoc
+     */
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }

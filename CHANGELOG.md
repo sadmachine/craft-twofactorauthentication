@@ -1,10 +1,26 @@
 Changelog
 ==================
 
-## 2.10.1 - 2022-11-11
-### Changed
-- Init load event now uses `Application::EVENT_INIT`
+## 3.0.2 - 2022-09-19
+### Changes
+- Updated froms and controllers to use Craft 4 way of returning data.
+
+## 3.0.1 - 2022-07-13
+### Changes
 - Code cleanup
+- Simplify request check
+
+### Fixed
+- Init load event now really uses `WebApplication`
+
+## 3.0.0 - 2022-06-28
+### Fixed
+- Issuer name is now the system name instead of application name
+- Init load event now uses `WebApplication::EVENT_INIT`
+
+## 3.0.0-beta.1 - 2022-05-09
+### Changed
+- Added craft 4 support
 
 ## 2.10.0 - 2021-11-08
 ### Added
