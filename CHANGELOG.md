@@ -1,6 +1,62 @@
 Changelog
 ==================
 
+## 3.3.7 - 2024-03-07
+### Fixed
+- fix: removed reference to old code
+
+## 3.3.6 - 2024-02-29
+### Fixed
+- fix: dont allow visits to plugin templates before 2fa
+
+## 3.3.5 - 2024-02-13
+### Fixed
+- fix: Missing usertoken table on fresh install
+
+## 3.3.4 - 2024-02-08
+### Fixed
+- fix: Exposure of Sensitive Attributes
+- fix: Corrected the single use token time window
+
+## 3.3.3 - 2024-02-08
+### Changed
+- Deprecate php 8.0
+- Updated spomky-labs/otphp
+- Updated endroid/qr-code
+
+### Fixed
+- Remove unneeded getTotp call.
+- fix: Exposure of Sensitive Attributes
+- fix: Token is now single use within time window
+
+## 3.3.2 - 2023-10-02
+### Fixed
+- Fixed a post-login vulnerability.
+
+## 3.3.1 - 2023-08-29
+### Fixed
+- Use `isTwoFactorEnabled` on settings screen.
+- Use `two-factor-authentication/settings/turn-on` action on settings screen.
+
+## 3.3.0 - 2023-08-29
+### Fixed
+- Verify screen updated to Craft's new frontend style.
+- Verify step wasn't functioning correctly.
+
+## 3.2.1 - 2023-07-06
+### Fixed
+- Prevent error when lastLoginDate is not set. Thanks to @joepagan
+
+## 3.2.0 - 2023-05-04
+### Changed
+- Make sure to render CP templates in `TEMPLATE_MODE_CP`
+- AssetBundle improvement to prevent assets not loading during login
+- Code cleanup
+
+## 3.1.0 - 2023-03-31
+### Fixed
+- Fix 500 error in CP for non-admins. Thanks to @mike-moreau
+
 ## 3.0.2 - 2022-09-19
 ### Changes
 - Updated froms and controllers to use Craft 4 way of returning data.

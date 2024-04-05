@@ -25,7 +25,7 @@ use yii\web\UserEvent;
 
 class Plugin extends CraftPlugin
 {
-    public string $schemaVersion = '2.7.2';
+    public string $schemaVersion = '3.3.3';
     public bool $hasCpSection = true;
 
     /**
@@ -93,8 +93,10 @@ class Plugin extends CraftPlugin
          * Returns the content for the additional attributes field
          */
         Event::on(User::class, Element::EVENT_SET_TABLE_ATTRIBUTE_HTML, function (SetElementTableAttributeHtmlEvent $event) {
+            /** @var \craft\web\User */
             $currentUser = Craft::$app->getUser()->getIdentity();
-            if ($event->attribute == 'hasTwoFactorAuthentication' && $currentUser->admin) {
+            if ($event->attribute == 'hasTwoFactorAuthentication' && $currentUser->can('editUsers')
+            && $currentUser->can('accessPlugin-two-factor-authentication')) {
                 /** @var User $user */
                 $user = $event->sender;
 
@@ -112,8 +114,10 @@ class Plugin extends CraftPlugin
         /**
          * Hook into the users cp page.
          */
-        Craft::$app->view->hook('cp.users.edit.details', function (array &$context) {
-            if (Craft::$app->getUser()->getIsAdmin() && !$context['isNewUser']) {
+        Craft::$app->getView()->hook('cp.users.edit.details', function (array &$context) {
+            /** @var \craft\web\User */
+            $currentUser = Craft::$app->getUser()->getIdentity();
+            if ($currentUser->can('editUsers') && $currentUser->can('accessPlugin-two-factor-authentication') && !$context['isNewUser']) {
                 /** @var User $user */
                 $user = $context['user'];
 

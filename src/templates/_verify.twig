@@ -11,6 +11,7 @@
     method: 'post',
     'accept-charset': 'UTF-8',
     action: actionUrl('two-factor-authentication/verify/login-process'),
+    'data-action': 'two-factor-authentication/verify/login-process',
 } %}
 
 {% if hasLogo %}
@@ -56,6 +57,8 @@
 
                 <small>{{ "Experiencing any issues? Contact your administrator for help."|t('two-factor-authentication') }}</small>
             </form>
+
+            <div id="verify-errors" role="status"></div>
         </div>
     </main>
 

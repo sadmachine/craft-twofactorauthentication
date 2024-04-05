@@ -4,7 +4,8 @@ namespace born05\twofactorauthentication\controllers;
 
 use Craft;
 use craft\web\Controller;
-use craft\elements\User;
+use craft\web\View;
+use craft\web\User;
 use born05\twofactorauthentication\Plugin as TwoFactorAuth;
 use born05\twofactorauthentication\web\assets\verify\VerifyAsset;
 
@@ -20,8 +21,8 @@ class VerifyController extends Controller
     public function actionLogin()
     {
         $this->requireLogin();
-        Craft::$app->view->registerAssetBundle(VerifyAsset::class);
-        return $this->renderTemplate('two-factor-authentication/_verify');
+        Craft::$app->getView()->registerAssetBundle(VerifyAsset::class);
+        return $this->renderTemplate('two-factor-authentication/_verify', [], View::TEMPLATE_MODE_CP);
     }
 
     /**
@@ -36,22 +37,31 @@ class VerifyController extends Controller
         $authenticationCode = $request->getBodyParam('authenticationCode');
 
         // Get the current user
-        $user = Craft::$app->getUser()->getIdentity();
+        /** @var User */
+        $userSession = Craft::$app->getUser();
+        $user = $userSession->getIdentity();
 
         if (TwoFactorAuth::$plugin->verify->verify($user, $authenticationCode)) {
             // Get the session duration
-            $sessionDuration = Craft::$app->getUser()->getRemainingSessionTime();
+            $sessionDuration = $userSession->getRemainingSessionTime();
 
             // Throw the after login event, because we blocked it earlier for non-cookieBased events.
             $this->afterLogin($user, false, $sessionDuration);
 
-            return $this->_handleSuccessfulLogin(true);
+            return $this->_handleSuccessfulLogin($user);
         } else {
+            $errorCode = \craft\elements\User::AUTH_INVALID_CREDENTIALS;
+            $errorMessage = Craft::t('two-factor-authentication', 'Authentication code is invalid.');
+
             return $this->asFailure(
-                Craft::t('two-factor-authentication', 'Authentication code is invalid.'),
+                $errorMessage,
                 data: [
-                    'errorCode' => User::AUTH_INVALID_CREDENTIALS,
+                    'errorCode' => $errorCode,
                 ],
+                routeParams: [
+                    'errorCode' => $errorCode,
+                    'errorMessage' => $errorMessage,
+                ]
             );
         }
     }
@@ -64,9 +74,10 @@ class VerifyController extends Controller
      *
      * @return Response
      */
-    private function _handleSuccessfulLogin(): Response
+    private function _handleSuccessfulLogin(\craft\elements\User $user): Response
     {
         // Get the return URL
+        /** @var User */
         $userSession = Craft::$app->getUser();
         $returnUrl = $userSession->getReturnUrl();
 
@@ -75,7 +86,15 @@ class VerifyController extends Controller
 
         // If this was an Ajax request, just return success:true
         if ($this->request->getAcceptsJson()) {
-            return $this->asSuccess(redirect: $returnUrl);
+            $return = [
+                'returnUrl' => $returnUrl,
+            ];
+
+            if (Craft::$app->getConfig()->getGeneral()->enableCsrfProtection) {
+                $return['csrfTokenValue'] = $this->request->getCsrfToken();
+            }
+
+            return $this->asSuccess(data: $return);
         }
 
         return $this->redirectToPostedUrl($userSession->getIdentity(), $returnUrl);

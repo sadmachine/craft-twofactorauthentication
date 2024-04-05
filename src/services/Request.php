@@ -129,7 +129,6 @@ class Request extends Component
                 // COPIED from craft\web\Application::_isSpecialCaseActionRequest
                 $request->getPathInfo() !== '' &&
                 !$isAllowed &&
-                !$this->isCraftSpecialRequests() &&
                 !$this->is2FASpecialRequests();
     }
 
@@ -179,29 +178,10 @@ class Request extends Component
             }
         }
 
-        return !$this->isCraftSpecialRequests() &&
-            !$this->is2FASpecialRequests() &&
+        return !$this->is2FASpecialRequests() &&
             !$isLoginPath &&
             !$isAllowed &&
             $isExcluded;
-    }
-
-    /**
-     * Test Craft special requests.
-     * @return boolean
-     */
-    private function isCraftSpecialRequests()
-    {
-        // COPIED from craft\web\Application::handleRequest
-
-        $request = Craft::$app->getRequest();
-
-        return (
-            $request->getIsCpRequest() &&
-            !$request->getIsActionRequest() &&
-            ($firstSeg = $request->getSegment(1)) !== null &&
-            Craft::$app->getPlugins()->getPlugin($firstSeg) !== null
-        );
     }
 
     /**
